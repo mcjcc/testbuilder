@@ -16,6 +16,8 @@ var detectNetwork = function(cardNumber) {
 
   var cardBrand;
 
+  if (parseInt(cardNumber) === NaN){return null}
+
   if (isDinerClub(cardNumber)) {
     cardBrand = "Diner's Club";
   } else if (isAmex(cardNumber)) {
@@ -40,6 +42,17 @@ function isDinerClub(cardNumber){
 }
 
 function isAmex(cardNumber){
+  var firstTwoNumbers;
+
+  firstTwoNumbers = cardNumber.slice(0,2);
+  if (firstTwoNumbers === "34" || firstTwoNumbers === "37" && cardNumber.length === 15) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isMasterCard(cardNumber){
   var firstTwoNumbers;
 
   firstTwoNumbers = cardNumber.slice(0,2);
