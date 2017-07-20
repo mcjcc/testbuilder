@@ -22,7 +22,11 @@ var detectNetwork = function(cardNumber) {
     cardBrand = "Diner's Club";
   } else if (isAmex(cardNumber)) {
     cardBrand = "American Express";
-  } else{
+  } else if (isVisa(cardNumber)) {
+    cardBrand = "Visa";
+  } else if (isMasterCard(cardNumber)) {
+    cardBrand = "MasterCard"
+  } else {
     return null;
   }
 
@@ -52,11 +56,22 @@ function isAmex(cardNumber){
   }
 }
 
+function isVisa(cardNumber){
+  var firstNumber;
+
+  firstNumber = cardNumber.slice(0,1);
+  if (firstNumber === "4" && (cardNumber.length === 19 || cardNumber.length === 13 || cardNumber.length === 16)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function isMasterCard(cardNumber){
   var firstTwoNumbers;
 
   firstTwoNumbers = cardNumber.slice(0,2);
-  if (firstTwoNumbers === "34" || firstTwoNumbers === "37" && cardNumber.length === 15) {
+  if ((firstTwoNumbers === "51" || firstTwoNumbers === "52" || firstTwoNumbers === "53" || firstTwoNumbers === "54" || firstTwoNumbers === "55") && cardNumber.length === 16) {
     return true;
   } else {
     return false;
