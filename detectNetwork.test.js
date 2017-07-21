@@ -111,15 +111,15 @@ describe('MasterCard', function() {
 
   // if ((firstTwoNumbers === "51" || firstTwoNumbers === "52" || firstTwoNumbers === "53" || firstTwoNumbers === "54" || firstTwoNumbers === "55") && cardNumber.length === 16) {
   it('has a prefix of 51 and length of 16', function() {
-    expect(detectNetwork('5112345678901234')).to.equal('MasterCard');
+    detectNetwork('5112345678901234').should.equal('MasterCard');
   });
 
   it('has a prefix of 52 and length of 16', function() {
-    expect(detectNetwork('5212345678901234')).to.equal('MasterCard');
+    detectNetwork('5212345678901234').should.equal('MasterCard');
   });
 
   it('has a prefix of 53 and length of 16', function() {
-    expect(detectNetwork('5312345678901234')).to.equal('MasterCard');
+    detectNetwork('5312345678901234').should.equal('MasterCard');
   });
 
   // You can also use should instead of expect, which changes the style
@@ -177,7 +177,7 @@ describe('Maestro', function() {
   for(var length = 8; length <=15; length++) {
     (function(length){
       it('has a prefix of 5018 and a length of ' + length, function(){
-        detectNetwork('5018' + '1'.repeat(length));        
+        detectNetwork('5018' + '1'.repeat(length));
       });
       it('has a prefix of 5020 and a length of ' + length, function(){
         detectNetwork('5020' + '1'.repeat(length));
