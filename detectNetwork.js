@@ -25,7 +25,11 @@ var detectNetwork = function(cardNumber) {
   } else if (isVisa(cardNumber)) {
     cardBrand = "Visa";
   } else if (isMasterCard(cardNumber)) {
-    cardBrand = "MasterCard"
+    cardBrand = "MasterCard";
+  } else if (isDiscover(cardNumber)) {
+    cardBrand = "Discover";
+  } else if (isMaestro(cardNumber)) {
+    cardBrand = "Maestro";
   } else {
     return null;
   }
@@ -71,7 +75,34 @@ function isMasterCard(cardNumber){
   var firstTwoNumbers;
 
   firstTwoNumbers = cardNumber.slice(0,2);
-  if ((firstTwoNumbers === "51" || firstTwoNumbers === "52" || firstTwoNumbers === "53" || firstTwoNumbers === "54" || firstTwoNumbers === "55") && cardNumber.length === 16) {
+    if ((firstTwoNumbers === "51" || firstTwoNumbers === "52" || firstTwoNumbers === "53" || firstTwoNumbers === "54" || firstTwoNumbers === "55") && cardNumber.length === 16) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isDiscover(cardNumber){
+  var firstTwoNumbers;
+  var firstThreeNumbers;
+  var firstFourNumbers;
+
+  firstTwoNumbers = cardNumber.slice(0,2);
+  firstThreeNumbers = cardNumber.slice(0,3);
+  firstFourNumbers = cardNumber.slice(0,4);
+
+  if ((["6011"].includes(firstFourNumbers) || ["644", "645", "646", "647", "648", "649"].includes(firstThreeNumbers) || ["65"].includes(firstTwoNumbers))  && [16,19].includes(cardNumber.length)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isMaestro(cardNumber){
+  var firstFourNumbers;
+
+  firstFourNumbers = cardNumber.slice(0,4);
+  if ((firstFourNumbers === "5018" || firstFourNumbers === "5020" || firstFourNumbers === "5038" || firstFourNumbers === "6304" ) && [12,13,14,15,16,17,18,19].includes(cardNumber.length)) {
     return true;
   } else {
     return false;
