@@ -22,6 +22,10 @@ var detectNetwork = function(cardNumber) {
     cardBrand = "Diner's Club";
   } else if (isAmex(cardNumber)) {
     cardBrand = "American Express";
+  } else if (isSwitch(cardNumber)) {
+    cardBrand = "Switch";
+  } else if (isChinaUnionPay(cardNumber)) {
+    cardBrand = "China UnionPay";
   } else if (isVisa(cardNumber)) {
     cardBrand = "Visa";
   } else if (isMasterCard(cardNumber)) {
@@ -107,4 +111,46 @@ function isMaestro(cardNumber){
   } else {
     return false;
   }
+}
+
+// China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
+
+function isChinaUnionPay(cardNumber){
+  var firstSixNumbers = cardNumber.slice(0,6);
+  var firstThreeNumbers = cardNumber.slice(0,3);
+  var firstFourNumbers = cardNumber.slice(0,4);
+
+  for (var prefix = 622126; prefix <= 622925; prefix++ ){
+    if (firstSixNumbers === prefix.toString() && [16,17,18,19].includes(cardNumber.length)) {
+      return true;
+    }
+  }
+
+  for (var prefix = 624; prefix <= 626; prefix++ ){
+    if (firstThreeNumbers === prefix.toString() && [16,17,18,19].includes(cardNumber.length)) {
+      return true;
+    }
+  }
+
+  for (var prefix = 6282; prefix <= 6288; prefix++ ){
+    if (firstFourNumbers === prefix.toString() && [16,17,18,19].includes(cardNumber.length)) {
+      return true;
+    }
+  }
+
+  return false;
+
+}
+
+// Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
+function isSwitch(cardNumber){
+  var firstFourNumbers = cardNumber.slice(0,4);
+  var firstSixNumbers = cardNumber.slice(0,6);
+
+  if ((["4903", "4905", "4911", "4936", "6333", "6759"].includes(firstFourNumbers) || ["564182","633110"].includes(firstSixNumbers)) && [16,18,19].includes(cardNumber.length)) {
+    return true;
+  } else {
+    return false;
+  }
+
 }

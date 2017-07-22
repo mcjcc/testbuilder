@@ -177,20 +177,89 @@ describe('Maestro', function() {
   for(var length = 8; length <=15; length++) {
     (function(length){
       it('has a prefix of 5018 and a length of ' + length, function(){
-        detectNetwork('5018' + '1'.repeat(length));
+        detectNetwork('5018' + '1'.repeat(length)).should.equal('Maestro');
       });
       it('has a prefix of 5020 and a length of ' + length, function(){
-        detectNetwork('5020' + '1'.repeat(length));
+        detectNetwork('5020' + '1'.repeat(length)).should.equal('Maestro');
       });
       it('has a prefix of 5038 and a length of ' + length, function(){
-        detectNetwork('5038' + '1'.repeat(length));
+        detectNetwork('5038' + '1'.repeat(length)).should.equal('Maestro');
       });
       it('has a prefix of 6304 and a length of ' + length, function(){
-        detectNetwork('6304' + '1'.repeat(length));
+        detectNetwork('6304' + '1'.repeat(length)).should.equal('Maestro');
       });
     })(length);
   }
 });
 
-describe('should support China UnionPay')
-describe('should support Switch')
+// China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
+describe('China UnionPay', function(){
+  for(var prefix = 622126; prefix <= 622925; prefix++) {
+    (function(prefix){
+      prefix = prefix.toString();
+      it('has a prefix of ' + prefix + ' and a length of 16', function(){
+        detectNetwork(prefix + '1'.repeat(16 - prefix.length)).should.equal('China UnionPay');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 17', function(){
+        detectNetwork(prefix + '1'.repeat(17 - prefix.length)).should.equal('China UnionPay');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 18', function(){
+        detectNetwork(prefix + '1'.repeat(18 - prefix.length)).should.equal('China UnionPay');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 19', function(){
+        detectNetwork(prefix + '1'.repeat(19 - prefix.length)).should.equal('China UnionPay');
+      });
+    })(prefix);
+  }
+  for(var prefix = 624; prefix <= 626; prefix++) {
+    (function(prefix){
+      prefix = prefix.toString();
+      it('has a prefix of ' + prefix + ' and a length of 16', function(){
+        detectNetwork(prefix + '1'.repeat(16 - prefix.length)).should.equal('China UnionPay');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 17', function(){
+        detectNetwork(prefix + '1'.repeat(17 - prefix.length)).should.equal('China UnionPay');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 18', function(){
+        detectNetwork(prefix + '1'.repeat(18 - prefix.length)).should.equal('China UnionPay');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 19', function(){
+        detectNetwork(prefix + '1'.repeat(19 - prefix.length)).should.equal('China UnionPay');
+      });
+    })(prefix);
+  }
+  for(var prefix = 6282; prefix <= 6288; prefix++) {
+    (function(prefix){
+      prefix = prefix.toString();
+      it('has a prefix of ' + prefix + ' and a length of 16', function(){
+        detectNetwork(prefix + '1'.repeat(16 - prefix.length)).should.equal('China UnionPay');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 17', function(){
+        detectNetwork(prefix + '1'.repeat(17 - prefix.length)).should.equal('China UnionPay');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 18', function(){
+        detectNetwork(prefix + '1'.repeat(18 - prefix.length)).should.equal('China UnionPay');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 19', function(){
+        detectNetwork(prefix + '1'.repeat(19 - prefix.length)).should.equal('China UnionPay');
+      });
+    })(prefix);
+  }
+
+});
+
+// Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
+describe('Switch', function(){
+
+  ["4903", "4905", "4911", "4936", "564182", "633110", "6333", "6759"].forEach(function(prefix){
+    it('has a prefix of ' + prefix + ' and a length of 16', function(){
+      detectNetwork(prefix + '1'.repeat(16 - prefix.length)).should.equal('Switch');
+    });
+    it('has a prefix of ' + prefix + ' and a length of 18', function(){
+      detectNetwork(prefix + '1'.repeat(18 - prefix.length)).should.equal('Switch');
+    });
+    it('has a prefix of ' + prefix + ' and a length of 19', function(){
+      detectNetwork(prefix + '1'.repeat(19 - prefix.length)).should.equal('Switch');
+    });
+  })
+});
